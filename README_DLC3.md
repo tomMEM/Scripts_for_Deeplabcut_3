@@ -1,3 +1,15 @@
+## 🧠 About This Toolkit
+
+These scripts are built to automate and streamline workflows using **[DeepLabCut 3.x](https://deeplabcut.github.io/DeepLabCut/)** — an open-source toolbox for markerless pose estimation of animals and humans.
+
+We rely directly on DeepLabCut’s **official libraries and API**, developed by the **[DeepLabCut Team](https://github.com/DeepLabCut)** at the Mathis Group (Harvard/EPFL).
+
+---
+
+### 📦 Official Repository
+
+👉 **GitHub:** [https://github.com/DeepLabCut/DeepLabCut](https://github.com/DeepLabCut/DeepLabCut)
+
 # DeepLabCut v3 Installation and Training Guide
 
 This guide provides a comprehensive walkthrough for installing DeepLabCut v3, handling common issues, manually caching models for offline use, and correctly evaluating model performance to avoid overfitting.
@@ -55,11 +67,17 @@ pip install "numpy<2.0" "pandas>=2.2,<3.0"
 ```
 Also fix potential numba/llvmlite conflicts:```bash
 pip install "numba<0.60" "llvmlite<0.42" numexpr
-```
+
 
 **e) Install DeepLabCut with GUI support**
 ```bash
-pip install "deeplabcut[gui]"
+pip install "deeplabcut[gui]" : Gives not always DLC3
+
+Safer is to install over:
+pip install --upgrade --force-reinstall "deeplabcut[gui] @ git+https://github.com/DeepLabCut/DeepLabCut.git"
+OR @3.0.0rc13, Note: Avoid @3.0.0rc12
+pip install --force-reinstall "deeplabcut[gui] @ git+https://github.com/DeepLabCut/DeepLabCut.git@3.0.0rc13"
+
 ```
 If you also need TensorFlow for legacy models, use:
 ```bash
