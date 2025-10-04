@@ -166,7 +166,9 @@ def run_interactive_training():
             pt_cfg = yaml.safe_load(f)
 
         # ✅ Apply your interactive input
-        pt_cfg["train_settings"]["epochs"] = additional_epochs
+        #pt_cfg["train_settings"]["epochs"] = additional_epochs
+        pt_cfg['train_settings']['epochs'] = resume_epoch_num + additional_epochs
+
         pt_cfg["runner"]["snapshots"]["save_epochs"] = save_interval_epochs
 
         # ✅ Ensure good training defaults
