@@ -164,33 +164,36 @@ def run_interactive_training():
     if pytorch_config_path.exists():
         with open(pytorch_config_path, "r") as f:
             pt_cfg = yaml.safe_load(f)
-
-        # ✅ Apply your interactive input
-        #pt_cfg["train_settings"]["epochs"] = additional_epochs
-        pt_cfg['train_settings']['epochs'] = resume_epoch_num + additional_epochs
-
-        pt_cfg["runner"]["snapshots"]["save_epochs"] = save_interval_epochs
-
-        # ✅ Ensure good training defaults
+    
+        # ✅ Compute total epochs (resume + additional)
+        total_epochs = int(resume_epoch_num) + int(additional_epochs)
         pt_cfg.setdefault("train_settings", {})
-        pt_cfg["train_settings"]["batch_size"] = 8             # Fit most GPUs
-        pt_cfg["train_settings"]["dataloader_workers"] = 2     # Faster loading
-        pt_cfg["train_settings"]["display_iters"] = 100         # More feedback
-
+        pt_cfg["train_settings"]["epochs"] = total_epochs
+        pt_cfg.setdefault("runner", {}).setdefault("snapshots", {})
+        pt_cfg["runner"]["snapshots"]["save_epochs"] = int(save_interval_epochs)
+    
+        # ✅ Ensure good training defaults
+        pt_cfg["train_settings"]["batch_size"] = 8              # Fits most GPUs
+        pt_cfg["train_settings"]["dataloader_workers"] = 2      # Faster loading
+        pt_cfg["train_settings"]["display_iters"] = 100          # More feedback
+    
         # ✅ Auto-tune learning rate for small datasets
         if "optimizer" in pt_cfg.get("runner", {}):
             lr = pt_cfg["runner"]["optimizer"]["params"].get("lr", 0.0005)
             if lr > 0.0003:
                 pt_cfg["runner"]["optimizer"]["params"]["lr"] = 0.0003
                 print("⚙️ Reduced learning rate to 0.0003 for small dataset stability.")
-
+    
         # ✅ Write back changes
         with open(pytorch_config_path, "w") as f:
             yaml.dump(pt_cfg, f)
-
-        print(f"✅ Updated {pytorch_config_path} → epochs={additional_epochs}, save every {save_interval_epochs} epochs")
+    
+        print(f"✅ Updated {pytorch_config_path} → total epochs={total_epochs} "
+              f"(resume {resume_epoch_num} + {additional_epochs}), "
+              f"save every {save_interval_epochs} epochs")
     else:
         print(f"⚠️ Could not find {pytorch_config_path} (training may use default 200 epochs)")
+
 
 
    
