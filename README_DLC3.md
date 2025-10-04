@@ -2,7 +2,10 @@
 
 These scripts are built to automate and streamline workflows using **[DeepLabCut 3.x](https://deeplabcut.github.io/DeepLabCut/)** — an open-source toolbox for markerless pose estimation of animals and humans.
 
-We rely directly on DeepLabCut’s **official libraries and API**, developed by the **[DeepLabCut Team](https://github.com/DeepLabCut)** at the Mathis Group (Harvard/EPFL).
+> These scripts were developed for **research and teaching purposes**, to enhance and automate workflows in **DeepLabCut 3.x**.
+> They rely on DeepLabCut’s **official backend functions, APIs, and configuration structures**.
+>
+> ⚖️ **Disclaimer:** All DeepLabCut intellectual property, algorithms, and core functionality remain owned and maintained by the official [DeepLabCut Development Team](https://github.com/DeepLabCut) at the Mathis Group (Harvard/EPFL).
 
 ---
 
